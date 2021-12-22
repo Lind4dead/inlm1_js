@@ -24,26 +24,40 @@
 
     <form id="regForm">
       <div class="row">
-        <div class="col-md-6">
-          <input type="text" id="firstName" class="form-control" placeholder="First name">
-          <div class="invalid-feedback">You have to enter your first name.</div>
+        <div class="col-md-6 mb-3">
+          <input type="text" id="firstName" class="form-control nameInputs" placeholder="First name">
+          <div class="invalid-feedback" id="firstName-error">You have to enter your first name.</div>
         </div>
-        <div class="col-md-6">
-          <input type="text" id="lastName" class="form-control" placeholder="Last name">
-          <div class="invalid-feedback">You have to enter your first name.</div>
+        <div class="col-md-6 mb-3">
+          <input type="text" id="lastName" class="form-control nameInputs" placeholder="Last name">
+          <div class="invalid-feedback" id="lastName-error">You have to enter your last name.</div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12 mt-4">
+        <div class="col-md-12 mb-3">
           <input type="email" id="email" class="form-control" placeholder="Email">
+          <div class="invalid-feedback" id="email-error"></div>
         </div>
       </div>
       <div class="mt-4 text-end">
-        <button class="btn btn-primary mx-3">Register</button>
-        <button class="btn btn-warning">Change</button>
+        <button class="btn btn-primary mx-3" id="buttonReg">Register</button>
+        <button type="button" class="btn btn-success" id="buttonChange">Save</button>
 
       </div>
     </form>
+  </div>
+
+  <div id="userDiv">
+    <ul id="userList" class="list-group">
+      <!-- <li class="list-group-item d-flex">
+        <div class="me-auto">
+          <div class="fw-bold">Emil Lind</div>
+          <a href="mailto:">emil.lind@mail.com</a>
+        </div>
+        <button class="btn btn-danger btn-sm" id="buttonChange">Change</button>
+      </li> -->
+
+    </ul>
   </div>
 
 
