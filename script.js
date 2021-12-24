@@ -118,23 +118,23 @@ addUserToList();
 email.addEventListener('keyup', () => {
   const list = [...email.classList]
 
-  if(list.includes('is-invalid'))
-  validateMail(email);
+  if (list.includes('is-invalid'))
+    validateMail(email);
 })
 
 firstNameInput.addEventListener('keyup', () => {
   const list = [...firstNameInput.classList];
 
-  if(list.includes('is-invalid'))
-  validateText('#' + firstName.id);
+  if (list.includes('is-invalid'))
+    validateText('#' + firstName.id);
 }),
 
-lastNameInput.addEventListener('keyup', () => {
-  const list = [...lastNameInput.classList];
+  lastNameInput.addEventListener('keyup', () => {
+    const list = [...lastNameInput.classList];
 
-  if(list.includes('is-invalid'))
-  validateText('#' + lastName.id);
-})
+    if (list.includes('is-invalid'))
+      validateText('#' + lastName.id);
+  })
 
 
 regForm.addEventListener('submit', e => {
@@ -142,18 +142,18 @@ regForm.addEventListener('submit', e => {
 
   const errors = [];
   console.log(e);
-  if(e.submitter.id !== 'buttonSave'){
+  if (e.submitter.id !== 'buttonSave') {
 
     for (let i = 0; i < e.currentTarget.length; i++) {
       if (e.currentTarget[i].type === 'text') {
         errors[i] = validateText('#' + e.currentTarget[i].id);
       }
       else if (e.currentTarget[i].type === 'email') {
-        
+
         errors[i] = validateMail(email);
       }
     }
-       
+
     if (errors.includes(false)) {
       return;
     }
@@ -166,31 +166,29 @@ regForm.addEventListener('submit', e => {
     }
   }
 
+  else if (e.submitter.id === 'buttonSave') {
 
-  
-else if(e.submitter.id === 'buttonSave'){
+    let changeUser = users.find(u => u.id === idNumber.innerText);
+    let index = users.indexOf(changeUser);
 
-  let changeUser = users.find(u => u.id === idNumber.innerText);
-  let index = users.indexOf(changeUser);
+    for (let i = 0; i < e.currentTarget.length; i++) {
+      if (e.currentTarget[i].type === 'text') {
+        errors[i] = validateText('#' + e.currentTarget[i].id);
+      }
+      else if (e.currentTarget[i].type === 'email') {
 
-  for (let i = 0; i < e.currentTarget.length; i++) {
-    if (e.currentTarget[i].type === 'text') {
-      errors[i] = validateText('#' + e.currentTarget[i].id);
+        errors[i] = validateMail(email);
+      }
     }
-    else if (e.currentTarget[i].type === 'email') {
-      
-      errors[i] = validateMail(email);
+    if (errors.includes(false)) {
+      return;
     }
-  }
-  if (errors.includes(false)) {
-    return;
-  }
 
-  users[index] = {
-    id: idNumber.innerText,
-    firstName: firstNameInput.value,
-    lastName: lastNameInput.value,
-    email: email.value
+    users[index] = {
+      id: idNumber.innerText,
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      email: email.value
     }
     addUserToList();
     for (let i = 0; i < e.currentTarget.length; i++) {
@@ -202,7 +200,7 @@ else if(e.submitter.id === 'buttonSave'){
 })
 
 output.addEventListener('click', (e) => {
-  // e.preventDefault();
+
 
   let changeUser = users.find(u => u.id === e.target.parentNode.id);
 
@@ -219,43 +217,7 @@ output.addEventListener('click', (e) => {
 
   }
 
-  // for(let i = 0; i < e.)
+  
 })
 
-// saveButton.addEventListener('submit', (e) => {
 
-//   let changeUser = users.find(u => u.id === idNumber.innerText);
-//   let index = users.indexOf(changeUser);
-//   // console.log(users.indexOf(changeUser));
-
-//   const errors = [];
-//   console.log(errors);
-//   console.log(e);
-//   for (let i = 0; i < e.currentTarget.length; i++) {
-//     if (e.currentTarget[i].type === 'text') {
-//       errors[i] = validateText('#' + e.currentTarget[i].id);
-
-//     }
-//     else if (e.currentTarget[i].type === 'email') {
-
-//       errors[i] = validateMail(email);
-//     }
-//   }
-
-//   // console.log(errors);
-
-//   if (errors.includes(false)) {
-//     return;
-//   }
-
-//   users[index] = {
-//     id: idNumber.innerText,
-//     firstName: firstNameInput.value,
-//     lastName: lastNameInput.value,
-//     email: email.value
-//   }
-
-//   buttonReg.classList.remove('d-none');
-//   buttonSave.classList.add('d-none');
-//   // console.log(users);
-// })
