@@ -174,7 +174,7 @@ regForm.addEventListener('submit', e => {
 
     let changeUser = users.find(u => u.id === idNumber.innerText);
     let tempMail = users.find(u => u.id === idNumber.innerText).email;
-    console.log(tempMail);
+    
     let index = users.indexOf(changeUser);
 
     for (let i = 0; i < e.currentTarget.length; i++) {
@@ -211,8 +211,7 @@ output.addEventListener('click', (e) => {
 
 
   let changeUser = users.find(u => u.id === e.target.parentNode.id);
-  console.log(e.target.parentNode.id);
-  console.log(e.target.id)
+  
   if (e.target.type === 'button' && e.target.id === 'buttonChange') {
 
     firstNameInput.value = changeUser.firstName;
