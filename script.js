@@ -7,6 +7,7 @@ const lastNameInput = document.querySelector('#lastName');
 const idNumber = document.querySelector('#id-number');
 
 
+
 let users = [
   {
     id: 'asd',
@@ -59,7 +60,7 @@ const validateMail = (mail) => {
     mail.focus();
     dupMail = false;
   }
-  console.log(dupMail);
+  
   if (dupMail) {
 
     if (regEx.test(mail.value)) {
@@ -98,12 +99,15 @@ const addUserToList = () => {
   users.forEach(user => {
     output.innerHTML += `
     <li class="list-group-item d-flex">
-        <div class="me-auto d-flex justify-content-between w-100" id="${user.id}">
+        <div class="me-auto d-flex justify-content-between w-100">
           <div>
             <div class="fw-bold">${user.firstName} ${user.lastName}</div>
             <a href="mailto:${user.email}">${user.email}</a>
           </div>  
-          <button type="button" class="btn btn-danger btn-sm" id="buttonChange">Change</button>
+          <div class="d-flex align-items-center" id="${user.id}">
+          <button type="button" class="btn btn-info btn-sm mx-3" id="buttonChange">Change</button>
+          <button type="button" class="btn btn-danger btn-sm" id="buttonDelete">X</button>
+          </div>
         </div>
       </li>
     `
@@ -141,7 +145,7 @@ regForm.addEventListener('submit', e => {
   e.preventDefault();
 
   const errors = [];
-  console.log(e);
+  
   if (e.submitter.id !== 'buttonSave') {
 
     for (let i = 0; i < e.currentTarget.length; i++) {
@@ -169,6 +173,8 @@ regForm.addEventListener('submit', e => {
   else if (e.submitter.id === 'buttonSave') {
 
     let changeUser = users.find(u => u.id === idNumber.innerText);
+    let tempMail = users.find(u => u.id === idNumber.innerText).email;
+    console.log(tempMail);
     let index = users.indexOf(changeUser);
 
     for (let i = 0; i < e.currentTarget.length; i++) {
@@ -176,8 +182,10 @@ regForm.addEventListener('submit', e => {
         errors[i] = validateText('#' + e.currentTarget[i].id);
       }
       else if (e.currentTarget[i].type === 'email') {
+        if(tempMail !== email.value){
+          errors[i] = validateMail(email);
+        }
 
-        errors[i] = validateMail(email);
       }
     }
     if (errors.includes(false)) {
@@ -203,8 +211,9 @@ output.addEventListener('click', (e) => {
 
 
   let changeUser = users.find(u => u.id === e.target.parentNode.id);
-
-  if (e.target.type === 'button') {
+  console.log(e.target.parentNode.id);
+  console.log(e.target.id)
+  if (e.target.type === 'button' && e.target.id === 'buttonChange') {
 
     firstNameInput.value = changeUser.firstName;
     lastNameInput.value = changeUser.lastName;
@@ -214,7 +223,10 @@ output.addEventListener('click', (e) => {
     buttonReg.classList.add('d-none');
     buttonSave.classList.remove('d-none');
 
-
+  }
+  else {
+    users = users.filter(user => user.id !== e.target.parentNode.id);
+    addUserToList();
   }
 
   
