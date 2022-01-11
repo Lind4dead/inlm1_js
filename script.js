@@ -28,7 +28,7 @@ const validateText = (id) => {
 
   let input = document.querySelector(id);
   let nameError = document.querySelector(id + '-error')
-  // nameError.innerText = 'Your name have to be atleast 2 characters long'
+  
 
   if (input.value === '' || input.value.length < 2) {
     nameError.innerText = 'Your name have to be atleast 2 characters long'
@@ -55,7 +55,7 @@ const validateMail = (mail) => {
   if (users.find(u => u.email === mail.value)) {
 
     emailError.innerText = 'That email already exists'
-    mail.classList.remove('is-valid')
+    mail.classList.remove('is-valid');
     mail.classList.add('is-invalid');
     mail.focus();
     dupMail = false;
@@ -114,6 +114,11 @@ const addUserToList = () => {
   })
 }
 
+const resetInputs = (e) => {
+  for (let i = 0; i < e.currentTarget.length; i++) {
+    e.currentTarget[i].value = '';
+  }
+}
 
 
 addUserToList();
@@ -143,11 +148,10 @@ firstNameInput.addEventListener('keyup', () => {
 
 regForm.addEventListener('submit', e => {
   e.preventDefault();
-
+  
   const errors = [];
   
   if (e.submitter.id !== 'buttonSave') {
-
     for (let i = 0; i < e.currentTarget.length; i++) {
       if (e.currentTarget[i].type === 'text') {
         errors[i] = validateText('#' + e.currentTarget[i].id);
@@ -157,25 +161,21 @@ regForm.addEventListener('submit', e => {
         errors[i] = validateMail(email);
       }
     }
-
     if (errors.includes(false)) {
       return;
     }
     else {
       regUser(e);
       addUserToList();
-      for (let i = 0; i < e.currentTarget.length; i++) {
-        e.currentTarget[i].value = '';
-      }
+      resetInputs(e);
+      
     }
   }
 
   else if (e.submitter.id === 'buttonSave') {
-
-    let changeUser = users.find(u => u.id === idNumber.innerText);
-    let tempMail = users.find(u => u.id === idNumber.innerText).email;
-    
-    let index = users.indexOf(changeUser);
+    const changeUser = users.find(u => u.id === idNumber.innerText);
+    const tempMail = users.find(u => u.id === idNumber.innerText).email;
+    const index = users.indexOf(changeUser);
 
     for (let i = 0; i < e.currentTarget.length; i++) {
       if (e.currentTarget[i].type === 'text') {
@@ -185,13 +185,11 @@ regForm.addEventListener('submit', e => {
         if(tempMail !== email.value){
           errors[i] = validateMail(email);
         }
-
       }
     }
     if (errors.includes(false)) {
       return;
     }
-
     users[index] = {
       id: idNumber.innerText,
       firstName: firstNameInput.value,
@@ -199,9 +197,7 @@ regForm.addEventListener('submit', e => {
       email: email.value
     }
     addUserToList();
-    for (let i = 0; i < e.currentTarget.length; i++) {
-      e.currentTarget[i].value = '';
-    }
+    resetInputs(e);
     buttonReg.classList.remove('d-none');
     buttonSave.classList.add('d-none');
   }
@@ -210,10 +206,9 @@ regForm.addEventListener('submit', e => {
 output.addEventListener('click', (e) => {
 
 
-  let changeUser = users.find(u => u.id === e.target.parentNode.id);
+  const changeUser = users.find(u => u.id === e.target.parentNode.id);
   
   if (e.target.type === 'button' && e.target.id === 'buttonChange') {
-
     firstNameInput.value = changeUser.firstName;
     lastNameInput.value = changeUser.lastName;
     email.value = changeUser.email;
@@ -221,14 +216,11 @@ output.addEventListener('click', (e) => {
 
     buttonReg.classList.add('d-none');
     buttonSave.classList.remove('d-none');
-
   }
   else {
     users = users.filter(user => user.id !== e.target.parentNode.id);
     addUserToList();
   }
-
-  
 })
 
 
